@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Produto</title>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no"/>
+
+    <link href="/webjars/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+	<div class="container">
+	    <div class="jumbotron">
+	        <h1>Produto</h1>
+	    </div>
+	
+	    <div>
+	        <a class="btn btn-primary" th:href="@{/produtos/cadastro}">Novo produto</a>
+	    </div>
+	    <hr/>
+	
+	    <div th:if="${produtos != null}">
+	        <h4>
+	            Produtos
+	        </h4>
+	
+	        <div th:if="${mensagem != null}">
+	            <div class="alert alert-info" role="alert">
+	                <span th:text="${mensagem}">mensagem</span>
+	            </div>
+	        </div>
+	
+	        <table class="table">
+	            <thead>
+		            <tr>
+		                <th>Nome</th>
+		                <th>Descrição</th>
+		                <th>Preço</th>
+		                <th>Ação</th>
+		            </tr>
+	            </thead>
+	            <tr th:each="produto : ${produtos}">
+	                <td th:text="${produto.nome}">nome</td>
+	                <td th:text="${produto.descricao}">descricao</td>
+	                <td th:text="${produto.preco}">preco</td>
+	                <td class="row">
+	                    <a class="btn btn-sm btn-info mr-1" th:href="@{/produtos/{id}(id=${produto.id})}">Editar</a>
+	                    <form th:action="@{/produtos/{id}(id=${produto.id})}" th:method="delete">
+		                    <button class="btn btn-sm btn-danger" type="submit">Excluir</button>
+	                    </form>
+	                </td>
+	            </tr>
+	        </table>
+	    </div>
+	
+	    <div th:if="${#lists.isEmpty(produtos)}">
+	        <div class="alert alert-info" role="alert">
+	            <span class="glyphicon glyphicon-exclamation-sign"></span>
+	            0 produtos cadastrados!
+	        </div>
+	    </div>
+	    <hr/>
+	
+	    <a class="btn btn-light" href="/home">Voltar</a>
+	    <hr/>
+	
+	    <footer class="footer">
+	        <p>&copy; 2018 Wandson</p>
+	    </footer>
+	
+	</div>
+</body>
+</html>
